@@ -1,4 +1,4 @@
-  name: Playwright Tests
+name: Playwright Tests
 
 on:
   push:
@@ -12,8 +12,13 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
 
     steps:
       - name: Checkout Repository
@@ -29,15 +34,10 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps 
+        run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: npx playwright test 
-        env:
-          ENV: qa
-          BASE_URL : ${{ secrets.BASEURL }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npx playwright test
 
       - name: Upload Playwright Report
         if: always()
@@ -45,15 +45,6 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
-
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: test-results/
-          retention-days: 30
 
       - name: Upload Allure Results
         if: always()
@@ -61,4 +52,3 @@ jobs:
         with:
           name: allure-results
           path: allure-results/
-          retention-days: 30
