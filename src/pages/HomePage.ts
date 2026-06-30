@@ -9,6 +9,7 @@ export class HomePage extends BasePage{
     private readonly headers : Locator;
     private readonly search : Locator;
     private readonly searchIcon : Locator;
+    private readonly newLocator : Locator;
 
     //constructor of class and init the locator 
     constructor(page :Page){
@@ -17,6 +18,7 @@ export class HomePage extends BasePage{
         this.headers =page.getByRole('heading', {level :2});
         this.search = page.getByRole('textbox', {name :'Search'});
         this.searchIcon = page.locator('div#search button');
+        this.newLocator =page.locator("div");
     }
 
     //public page actions (method)/ behaviour 
