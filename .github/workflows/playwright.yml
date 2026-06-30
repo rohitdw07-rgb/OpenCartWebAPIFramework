@@ -29,10 +29,10 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps 
 
       - name: Run Playwright Tests
-        run: npx playwright test --project=chromium
+        run: npx playwright test 
         env:
           ENV: qa
           BASE_URL : ${{ secrets.BASEURL }}
